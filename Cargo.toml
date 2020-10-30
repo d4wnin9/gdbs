@@ -1,6 +1,6 @@
 [package]
 name = "gdbs"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["d4wnin9 <d4wnin9@gmail.com>"]
 edition = "2018"
 
@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 clap = "2.20.3"
+dirs = "3.0"

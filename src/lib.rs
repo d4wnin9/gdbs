@@ -1,4 +1,5 @@
 extern crate clap;
+extern crate dirs;
 
 use std::error::Error;
 use std::fs::File;
@@ -7,9 +8,15 @@ use std::io::prelude::*;
 
 
 pub fn run(args: clap::ArgMatches) -> Result<(), Box<dyn Error>> {
+    let mut path_to_gdbs = dirs::home_dir().unwrap();
+    path_to_gdbs.push(".gdbs");
+    let mut path_to_gdbinit = dirs::home_dir().unwrap();
+    path_to_gdbinit.push(".gdbinit");
+
+
     let gdb_type = argparse(args);
 
-    let mut f = File::open("~/.gdbs")?;
+    let mut f = File::open(&path_to_gdbs)?;
     let mut contents = String::new();
     f.read_to_string(&mut contents)?;
 
@@ -19,7 +26,7 @@ pub fn run(args: clap::ArgMatches) -> Result<(), Box<dyn Error>> {
         search(&gdb_type, &contents)
     };
 
-    let mut f = File::create("~/.gdbinit")?;
+    let mut f = File::create(path_to_gdbinit)?;
     writeln!(f, "{}", source_path)?;
 
     Ok(())
